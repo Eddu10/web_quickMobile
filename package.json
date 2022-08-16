@@ -1,0 +1,80 @@
+{
+  "name": "hapi-test",
+  "version": "0.0.0-development",
+  "description": "Template for new hapi projects",
+  "private": true,
+  "scripts": {
+    "commit": "npx git-cz",
+    "coverage": "nyc tape \"./src/api/server.test.js\" \"src/api/tests/*.test.js\" \"./src/config/objection.down.js\"",
+    "postcoverage": "nyc report --reporter=html",
+    "dev": "pm2 start src/index.js --name=hapi-test --watch",
+    "lint": "eslint \"src/**/*.js\"",
+    "migrate": "npx knex migrate:latest",
+    "new-migrate": "npx knex migrate:make",
+    "new-seed": "npx knex seed:make --timestamp-filename-prefix",
+    "rollback-migrate": "npx knex migrate:rollback",
+    "precommit": "lint-staged && npm run test",
+    "pretest": " knex seed:run",
+    "pretint": "prettier-eslint --write \"src/**/*.js\"",
+    "test": "tape \"./src/api/server.test.js\" \"src/api/tests/*.test.js\" \"./src/config/objection.down.js\" | tap-spec",
+    "semantic-release": "semantic-release",
+    "prepare": "husky install",
+    "rt": "nodemon src/index.js"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "npm run pretint"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
+  },
+  "repository": "https://github.com/josarmas9416/hapi-test.git",
+  "author": "Joseph Armas",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/josarmas9416/hapi-test/issues"
+  },
+  "homepage": "https://github.com/josarmas9416/hapi-test#readme",
+  "dependencies": {
+    "@hapi/basic": "^6.0.0",
+    "@hapi/boom": "^9.1.4",
+    "@hapi/hapi": "^20.2.2",
+    "@hapi/inert": "^6.0.5",
+    "@hapi/jwt": "^2.1.1",
+    "@hapi/vision": "^6.1.0",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "hapi-swagger": "^14.2.5",
+    "joi": "^17.6.0",
+    "knex": "^1.0.4",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34",
+    "objection": "^3.0.1",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.3.0",
+    "@commitlint/config-conventional": "^16.2.4",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "blipp": "^4.0.2",
+    "git-cz": "^4.8.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "nodemon": "^2.0.15",
+    "prettier-eslint": "^13.0.0",
+    "prettier-eslint-cli": "^5.0.1",
+    "semantic-release": "^19.0.2",
+    "semantic-release-cli": "^5.4.4",
+    "tap-spec": "^5.0.0",
+    "tape": "^5.5.2"
+  },
+  "main": "ecosystem.config.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
